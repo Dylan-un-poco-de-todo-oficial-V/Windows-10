@@ -40,6 +40,47 @@
                 dragValue.style.top = y + "px";
             }
 
+            setInterval(displayclock, 500);
+
+            function displayclock() {
+                var time = new Date();
+                var hrs = time.getHours();
+                var min = time.getMinutes();
+                var sec = time.getSeconds();
+                var en = 'AM';
+
+                if (hrs > 12) {
+                    en = 'PM';
+                }
+
+                if (hrs > 12) {
+                    hrs = hrs -12;
+                }
+
+                if (hrs == 0) {
+                    hrs = 12;
+                }
+
+                if(hrs < 10) {
+                    hrs = '0' + hrs;
+                }
+
+                if(min < 10) {
+                    min = '0' + min;
+                }
+
+                if(sec < 10) {
+                    sec = '0' + sec;
+                }
+
+                document.getElementById("clock").innerHTML = hrs + ":" + min + ":" + sec + ' ' + en;
+                document.getElementById("clock-leftwidget").innerHTML = hrs + ":" + min + ":" + sec + ' ' + en;
+            }
+
+            function toggleLeftWidget() {
+                document.getElementById("leftwidget").classList.toggle("active");
+            }
+
 
         </script>
 
@@ -246,6 +287,56 @@
                 display: block;
             }
 
+            .clock {
+                position: absolute;
+                color: white;
+                top: 0%;
+                left: 88%;
+                font-family: arial;
+            }
+
+            .leftw {
+                position: absolute;
+                color: white;
+                top: 0%;
+                left: 95%;
+                height: 50px;
+                width: 50px;
+                background-color: rgba(255, 255, 255, 0);
+                text-align: center;
+            }
+
+            .leftw:hover {
+                background-color: rgba(255, 255, 255, 0.336);
+            }
+
+            .icowidl {
+                position: relative;
+                top: 15%;
+            }
+
+            .leftwidget {
+                position: absolute;
+                top: 0%;
+                left: 71.9%;
+                width: 50vh;
+                height: 95vh;
+                background-color: rgba(71, 71, 71, 0.726);
+                display: none;
+            }
+
+            .leftwidget.active {
+                display: block;
+            }
+
+            .clock-leftwidget {
+                color: white;
+                margin: 20px;
+                font-size: 60px;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-weight: lighter;
+            }
+
         </style>
 
         <body onload="move('notepad')">
@@ -257,6 +348,10 @@
                 <div class="app-icon-container">
                     <i class="fa fa-edge edge-ico" aria-hidden="true"></i>
                     <i class="fa fa-laptop trueedit-ico" aria-hidden="true"></i>
+                </div>
+                <div id="clock" class="clock">10:10:01</div>
+                <div id="leftw" class="leftw" onclick="toggleLeftWidget()">
+                    <i class="fa fa-commenting-o icowidl"></i>
                 </div>
             </div>
 
@@ -278,8 +373,12 @@
                     <button class="close-btn" onclick="toggleNotepad()">&times;</button>
                 </div>
                 <div class="window-body">
-                    <textarea class="stickyedit-edit">Welcome to Win10! The Windows 10 build simulation by Yatin helps you to run windows 10 online in your browser. This build is still in development but will be developed soon! Also, the window you are using is draggable</textarea>
+                    <textarea class="stickyedit-edit">Welcome to Win10! The Windows 10 build simulation by Yatin helps you to run windows 10 online in your browser. This build is still in development but will be developed soon!</textarea>
                 </div>
+            </div>
+
+            <div class="leftwidget" id="leftwidget">
+                <div class="clock-leftwidget" id="clock-leftwidget"></div>
             </div>
         </body>
     </head>
