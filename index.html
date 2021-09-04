@@ -11,6 +11,36 @@
                 document.getElementById("start").classList.toggle("active");
             }
 
+            function toggleStore() {
+                toggleStart();
+            }
+
+            function toggleNotepad() {
+                toggleStart();
+                document.getElementById("notepad").classList.toggle("active");
+            }
+
+            var dragValue;
+
+            function move(id) {
+                var movel = document.getElementById("notepad");
+                movel.style.position = "absolute";
+                movel.onmousedown = function() {
+                    dragValue = movel;
+                }
+            }
+            document.onmouseup = function(e) {
+                dragValue = null;
+            }
+            document.onmousemove = function(e) {
+                var x = e.pageX;
+                var y = e.pageY;
+
+                dragValue.style.left = x + "px";
+                dragValue.style.top = y + "px";
+            }
+
+
         </script>
 
         <style type="text/css">
@@ -106,7 +136,7 @@
 
             .start-menu {
                 position: fixed;
-                width: 300px;
+                width: 350px;
                 height: 400px;
                 background-color: rgb(63, 63, 63);
                 top: 35.1%;
@@ -117,14 +147,6 @@
             }
 
             .start-menu.active {
-                position: fixed;
-                width: 300px;
-                height: 400px;
-                background-color: rgb(63, 63, 63);
-                top: 35.1%;
-                left: 0%;
-                color: white;
-                border-radius: 5px;
                 display: block;
             }
 
@@ -142,9 +164,91 @@
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
 
+            .start-widget {
+                position: relative;
+                height: 100px;
+                width: 100px;
+                background-color: rgb(23, 160, 160);
+                margin: 10px;
+                border-radius: 10px;
+                opacity: 100;
+            }
+
+            .start-widget:hover {
+                opacity: 0.5;
+            }
+
+            .widget-text {
+                position: relative;
+                font-size: 2em;
+                top: 35%;
+                left: 35%;
+            }
+
+            .head-window {
+                width: 500px;
+                height: 25px;
+                background-color: whitesmoke;
+            }
+
+            .close-btn {
+                position: relative;
+                cursor: url('default.cur'), default;
+                width: 40px;
+                height: 25px;
+                font-size: 15px;
+                border: none;
+                background-color: rgba(255, 0, 0, 0);
+                color: black;
+                border-radius: 2px;
+                left: 72%;
+            }
+
+            .close-btn:hover {
+                cursor: url('default.cur'), default;
+                background-color: rgb(255, 0, 0);
+                color: white;
+            }
+
+            .window-body {
+                width: 500px;
+                height: 300px;
+                background-color: white;
+            }
+
+            .stickyedit-edit {
+                width: 500px;
+                height: 300px;
+            }
+
+            .window-icon {
+                position: relative;
+                left: 10px;
+            }
+
+            .window-head-text {
+                font-family: arial;
+                font-weight: bold;
+            }
+
+            .window {
+                padding: 0;
+                margin: 0;
+                display: inline-block;
+                box-sizing: border-box;
+            }
+
+            .notepad {
+                display: none;
+            }
+
+            .notepad.active {
+                display: block;
+            }
+
         </style>
 
-        <body>
+        <body onload="move('notepad')">
             <div class="taskbar">
                 <div class="start-button" onclick="toggleStart()">
                     <i class="fa fa-windows win"></i>
@@ -159,6 +263,23 @@
             <div class="start-menu" id="start">
                 <i class="fa fa-user login-user-start"></i>
                 <p class="text-of-login">Yatin Tiwari</p>
+                <div class="widget1 start-widget" onclick="toggleStore()">
+                    <i class="fa fa-briefcase widget-text"></i>
+                </div>
+                <div class="widget2 start-widget" onclick="toggleNotepad()">
+                    <i class="fa fa-sticky-note widget-text"></i>
+                </div>
+            </div>
+
+
+            <div class="notepad window" id="notepad">
+                <div class="head-window">
+                    <i class="fa fa-sticky-note window-icon"><t class="window-head-text"> StickyEdit</t></i>
+                    <button class="close-btn" onclick="toggleNotepad()">&times;</button>
+                </div>
+                <div class="window-body">
+                    <textarea class="stickyedit-edit">Welcome to Win10! The Windows 10 build simulation by Yatin helps you to run windows 10 online in your browser. This build is still in development but will be developed soon!</textarea>
+                </div>
             </div>
         </body>
     </head>
